@@ -1,0 +1,24 @@
+{
+  "name": "grid-fs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm start --prefix frontend\" \"npm start --prefix backend\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isabelmarh/grid-fs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/isabelmarh/grid-fs/issues"
+  },
+  "homepage": "https://github.com/isabelmarh/grid-fs#readme",
+  "dependencies": {
+    "concurrently": "5.3.0"
+  }
+}
