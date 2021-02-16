@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Readable } = require("stream");
 
 module.exports = {
-    uploadFileHelper: async function (file) {
+    uploadFileHelper: async function (file, userId) {
         try {
             //default connection
             const db = mongoose.connection.db;
@@ -12,8 +12,8 @@ module.exports = {
 
             let uploadStream = await bucket.openUploadStream(file.originalname, {
                 metadata: {
-                    user: "John",
-                    contentType: file.mimeType,
+                    user: userId,
+                    contentType: file.mimetype,
                 },
             });
             function bufferToStream(binary) {
@@ -58,5 +58,12 @@ module.exports = {
         });
         let id = new mongoose.mongo.ObjectID(fileID);
         bucket.delete(id);
+    },
+    getFileByUser: (userId) => {
+        let db = mongoose.connection.db;
+        let bucket = new mongoose.mongo.GridFSBucket(db, {
+            bucketName: "files"
+        });
+        return bucket.find({ "metadata.userId":  userId  });
     }
 };

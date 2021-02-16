@@ -1,14 +1,14 @@
-const { uploadFileHelper, downloadFileHelper, findFileById, deleteFileHelper } = require("./../utils/grid_fs");
+const { uploadFileHelper, downloadFileHelper, findFileById, deleteFileHelper, getFileByUser } = require("./../utils/grid_fs");
 
 module.exports = {
     uploadFile: async (req, res) => {
         try {
             const file = req.file;
-            console.log(file);
-            uploadFileHelper(file);
+            const userId = req.user;
+            uploadFileHelper(file, userId);
             res.status(200).json({ msg: "File succesfully uploaded" });
         } catch (err) {
-            res.status(500).json({ msg: err.message });
+            res.status(500).json({ msg: "Internal server error" });
         }
     },
     //http//localhost:5000/api/files/123lsa;
@@ -28,7 +28,7 @@ module.exports = {
                 downloadFileHelper(fileId).pipe(res);
             }
         } catch (err) {
-            return res.status(500).json({ msg: err.message });
+            return res.status(500).json({ msg: "Internal server error" });
         }
     },
     deleteFile: (req, res) => {
@@ -37,6 +37,19 @@ module.exports = {
             deleteFileHelper(id);
             return res.status(200).json({ msg: "File succesfully deleted" });
         } catch (err) {
+            return res.status(500).json({ msg: "Internal server error" });
+        }
+    },
+    getAllFiles: async (req, res) => {
+        try {
+            const userId = req.user;
+            const response = await findFileByUser(userId);
+            const files = await response.toArray();
+            if (files.length) {
+                res.status(200).send(files);
+            }
+            res.status(400).json({ msg: "No files found" });
+        } catch (error) {
             return res.status(500).json({ msg: "Internal server error" });
         }
     }
