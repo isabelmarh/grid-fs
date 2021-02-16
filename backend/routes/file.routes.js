@@ -3,7 +3,7 @@ const router = express.Router();
 const upload = require("./../config/multer");
 const auth = require("./../config/auth");
 
-const { uploadFile, downloadFile } = require("./../controller/files.controller");
+const { uploadFile, downloadFile, deleteFile } = require("./../controller/files.controller");
 
 /*
 @route      POST  api/files/upload
@@ -18,5 +18,7 @@ router.post("/upload", auth, upload.single("file"), uploadFile);
 @access     Private
 */
 router.post("/download/:id", downloadFile);
+
+router.delete("/delete/:id", auth, deleteFile);
 
 module.exports = router;

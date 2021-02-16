@@ -1,4 +1,4 @@
-const { uploadFileHelper, downloadFileHelper, findFileById} = require("./../utils/grid_fs");
+const { uploadFileHelper, downloadFileHelper, findFileById, deleteFileHelper } = require("./../utils/grid_fs");
 
 module.exports = {
     uploadFile: async (req, res) => {
@@ -31,4 +31,13 @@ module.exports = {
             return res.status(500).json({ msg: err.message });
         }
     },
+    deleteFile: (req, res) => {
+        try {
+            const { id } = req.params;
+            deleteFileHelper(id);
+            return res.status(200).json({ msg: "File succesfully deleted" });
+        } catch (err) {
+            return res.status(500).json({ msg: "Internal server error" });
+        }
+    }
 };

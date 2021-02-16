@@ -37,10 +37,10 @@ module.exports = {
         }
     },
 
-    findFileById: (fileId) => {
+    findFileById: (fileID) => {
         let db = mongoose.connection.db;
         let bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: "files" });
-        let id = new mongoose.mongo.ObjectID(fileId);
+        let id = new mongoose.mongo.ObjectID(fileID);
         return bucket.find({ _id: id });
     },
 
@@ -50,4 +50,13 @@ module.exports = {
         let id = new mongoose.mongo.ObjectID(fileID);
         return bucket.openDownloadStream(id);
     },
+
+    deleteFileHelper: (fileID) => {
+        let db = mongoose.connection.db;
+        let bucket = new mongoose.mongo.GridFSBucket(db, {
+            bucketName: "files"
+        });
+        let id = new mongoose.mongo.ObjectID(fileID);
+        bucket.delete(id);
+    }
 };
