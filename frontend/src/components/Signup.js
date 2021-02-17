@@ -21,6 +21,7 @@ const SignUp = () => {
             ...prev,
             [ev.target.name]: ev.target.value
         }));
+        console.log(signupval);
     };
 
     const handleSubmit = async (ev) => {
@@ -42,11 +43,11 @@ const SignUp = () => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <TextField required label="email" name="email" fullWidth onChange={handleChange}></TextField>
-                <TextField required label="username" name="username" fullWidth onChange={handleChange}></TextField>
-                <TextField required label="password" type="password" name="password" fullWidth onChange={handleChange}></TextField>
-                <TextField required label="repeat_password" type="password" name="repeat_password" fullWidth onChange={handleChange}></TextField>
-                <Button type="submit" variant="standard">Sign up</Button>
+                <TextField required label="Email" name="email" fullWidth onChange={handleChange}></TextField>
+                <TextField required label="Username" name="username" fullWidth onChange={handleChange}></TextField>
+                <TextField required label="Password" type="password" name="password" fullWidth onChange={handleChange}></TextField>
+                <TextField required label="Repeat password" type="password" name="repeat_password" fullWidth onChange={handleChange}></TextField>
+                <Button type="submit" variant="contained" color="primary">Sign up</Button>
             </form>
         </div>
     );

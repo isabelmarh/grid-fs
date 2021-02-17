@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { loginUser } from "../utils/api";
@@ -28,7 +28,7 @@ const Login = () => {
             ev.preventDefault();
             const resp = await loginUser(loginval);
             if (resp.status === 200) {
-                setUser({ user: resp.data.user, isLoggedin: true });
+                setUser({ user: resp.data.user, isLoggedIn: true });
                 localStorage.setItem("token", resp.data.token);
                 enqueueSnackbar("Login Successful", {
                     variant: "success",
@@ -41,6 +41,13 @@ const Login = () => {
             });
         }
     };
+
+    useEffect(() => {
+        if (user.isLoggedIn) {
+            history.push("/dashboard");
+        }
+    }, [history, user]);
+
     return (
         <div>
             <form onSubmit={handleSubmit}>
