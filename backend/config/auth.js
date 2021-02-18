@@ -1,3 +1,4 @@
+const express = require('express')
 const jwt = require('jsonwebtoken');
 const { jwt_token } = require('./keys');
 
@@ -11,12 +12,12 @@ const auth = (req, res, next) => {
         }
         // verifying jwt token
         jwt.verify(token, jwt_token, function (error, user) {
-            //setting the req.user to the id of the user
             if (error) {
+                return res.status(400).json({ msg: 'Token not valid' });
+            }
+                //setting the req.user to the id of the user
                 req.user = user._id;
                 next();
-            }
-            return res.status(400).json({ msg: 'Token not valid' });
         });
     } else {
         return res.status(401).json({ msg: 'Unauthorized' });

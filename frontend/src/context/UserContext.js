@@ -8,6 +8,12 @@ const initialState = {
 };
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(initialState);
+
+    const handleLogOut = () => {
+        localStorage.removeItem("token");
+        setUser(initialState)
+    };
+
     useEffect(() => {
         const getUser = async () => {
             try {
@@ -22,7 +28,7 @@ export const UserProvider = ({ children }) => {
         getUser();
     }, []);
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, handleLogOut }}>
             {children}
         </UserContext.Provider>
     );

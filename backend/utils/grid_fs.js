@@ -37,10 +37,10 @@ module.exports = {
         }
     },
 
-    findFileById: (fileID) => {
+    findFileById: (fileId) => {
         let db = mongoose.connection.db;
         let bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: "files" });
-        let id = new mongoose.mongo.ObjectID(fileID);
+        let id = new mongoose.mongo.ObjectID(fileId);
         return bucket.find({ _id: id });
     },
 
@@ -64,6 +64,6 @@ module.exports = {
         let bucket = new mongoose.mongo.GridFSBucket(db, {
             bucketName: "files"
         });
-        return bucket.find({ "metadata.userId":  userId  });
+        return bucket.find({ "metadata.user": userId });
     }
 };

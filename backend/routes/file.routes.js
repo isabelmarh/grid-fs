@@ -17,7 +17,7 @@ router.post("/upload", auth, upload.single("file"), uploadFile);
 @desc       Get files uploaded by user
 @access     Private
 */
-router.post("/download/:id", auth, downloadFile);
+router.get("/download/:id", auth, downloadFile);
 
 router.delete("/delete/:id", auth, deleteFile);
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -17,7 +17,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useHistory } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 const drawerWidth = 240;
 
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up("sm")]: {
             width: `calc(100% - ${drawerWidth}px)`,
             marginLeft: drawerWidth,
-        },
+        }
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -43,10 +45,14 @@ const useStyles = makeStyles((theme) => ({
             display: "none",
         },
     },
+    title: {
+        flexGrow: 1,
+    },
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
         width: drawerWidth,
+        background: "#e0f2f1"
     },
     content: {
         flexGrow: 1,
@@ -59,6 +65,7 @@ function DashboardLayout(props) {
     const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
+    const { handleLogOut } = useContext(UserContext);
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
@@ -103,9 +110,12 @@ function DashboardLayout(props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap>
+                    <Typography variant="h6" className={classes.title} noWrap>
                         myDashboard
           </Typography>
+                    <IconButton onClick={handleLogOut}>
+                        <ExitToAppIcon style={{ color: "white" }} />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
             <nav className={classes.drawer} aria-label="mailbox folders">

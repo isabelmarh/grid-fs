@@ -43,7 +43,7 @@ module.exports = {
     getAllFiles: async (req, res) => {
         try {
             const userId = req.user;
-            const response = await findFileByUser(userId);
+            const response = await getFileByUser(userId);
             const files = await response.toArray();
             if (files.length) {
                 res.status(200).send(files);

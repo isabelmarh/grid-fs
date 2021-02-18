@@ -5,12 +5,28 @@ import { loginUser } from "../utils/api";
 import { useSnackbar } from "notistack";
 import { UserContext } from '../context/UserContext';
 import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 
 const initialState = {
     username: "",
     password: "",
 };
+
+const useStyles = makeStyles((theme) => ({
+    form: {
+        "& > div": {
+            margin: "15px 0",
+        }
+    },
+    button: {
+        margin: "15px 0",
+        width: "100%",
+        background: "#009688",
+    }
+}));
+
 const Login = () => {
+    const classes = useStyles();
     const [loginval, setLoginVal] = useState(initialState);
     const { enqueueSnackbar } = useSnackbar();
     const history = useHistory();
@@ -28,8 +44,8 @@ const Login = () => {
             ev.preventDefault();
             const resp = await loginUser(loginval);
             if (resp.status === 200) {
-                setUser({ user: resp.data.user, isLoggedIn: true });
                 localStorage.setItem("token", resp.data.token);
+                setUser({ user: resp.data.user, isLoggedIn: true });
                 enqueueSnackbar("Login Successful", {
                     variant: "success",
                 });
@@ -46,11 +62,11 @@ const Login = () => {
         if (user.isLoggedIn) {
             history.push("/dashboard");
         }
-    }, [history, user]);
+    }, [user, history]);
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className={classes.form}>
                 <TextField
                     required
                     label="Email"
@@ -66,7 +82,7 @@ const Login = () => {
                     type="password"
                     onChange={handleChange}
                 ></TextField>
-                <Button type="submit" variant="contained" color="primary">
+                <Button className={classes.button} type="submit" variant="contained" color="primary">
                     Log in
         </Button>
             </form>
